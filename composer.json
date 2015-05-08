@@ -1,0 +1,7 @@
+{
+    "require": {
+        "php": ">=5.4",
+        "phpseclib/phpseclib": "master-dev",
+        "symfony/var-dumper": "~2.6"
+    }
+}
