@@ -5,74 +5,29 @@ use phpseclib\File\X509;
 
 class KeyChain
 {
-    public $rsa = [
-        'privatekey' => '-----BEGIN RSA PRIVATE KEY-----
-MIIEpAIBAAKCAQEAohFPmQfdSgnquBr39uktUlCBQ9/AUUhLWWCJjAj71NFJO+B/
-Wgq5BeeczSTS3P0raUZpcKFptoPfkkUzmyArMl6RfjcYB+RgBvzPRkBli+YvLqNW
-V0fOfBzAYULDeQ4JrRNJG/aHaoQbPa4XieU/RVtCLeCdtB6Wq0XilBBKY4A5OCb5
-UglPtfaX3TvhehfWLLMEBGVqFZhq2Ftmj4KTAGP1v14xN84oZXmAU4RYrkoQI3Q2
-KSnBDi69owhGtKPJcMKHBIMMPDPATS0ZbeiJ0k4xW3JfudGp6rWufrCy5diaaBmK
-07Kt2TRTfvhj7P4gu91IKmwnseaOSpkwLphqawIDAQABAoIBAFmFqGtGrdTc/3us
-4fXQvckvUQgWC5yai4yWR8RDnh/jb0mU66PoMmXxl2q2AYgyjI09aLbfYo5/77pT
-YXs53MKY/FM0yaBqZSTW9wO+RJlvj/Z6IRJbRtLF6vqOr30p5Oxmr8azef+7c3Sx
-uqzgJgAAteCzp0k8cEuxccQJ751f8GPLUWYcLnWEBmx50SgbCwEFL4eyfJQmOtJt
-g6z78BaGOMYFYN9VoFgpJn8MsMfeCsM6g/VTPUhj9syDnkkUTFD62k6vm6xyzFvs
-eUJHgRtMQLMuMdXEdx08RVXeJSLcaSndEEhdCZMLIO5O8CTxv/ETLwjgCN21LdFs
-PdVWnCkCgYEA1rmcc3mZlATzJWDA0qwRbgcCVMOODRFqvQ1sMN+9DOkWOtkzGits
-1SlE0MfZjvHvOEvEbcRkEaINx+cqSkL4jEU69jpHtnf8PoR7lPOMhTZ7bzLHhSPJ
-nEN5JD8JwDESeDe0Mtz3W3ZgvGzYK1xU1he9Txb6kOF62IH8sl5xT/0CgYEAwTh8
-C7yTxCMaiyfWs5+u6KcDx4YhAyyCYD9m2MaqSIsbPl2y789XZ+oEDnsTZlquywUO
-Zlxc1kT6fSjCmy7YT4pH9hnzaf2tcu2t4aJfVPU6MfVOkanoXb+m74qqIVm+fSux
-Dvl5Jy2Fzzk3/+h00FarIK8Ifg7l9B9zUZGi7IcCgYEAtSbegOVj1ebfIvefdZzJ
-D6RGKTDaFNhOzrQWRJ1dpxi2MmuvmzJrnOI2NlWEi/48LahuTZTUP7QSIEY7/W7G
-tcBqX/UHLz/GxQ+MGzvlnzU5qbSTcxWgL38VIqk0FrrPtDB6jDazUKxsLEs/jEVX
-JU/d3G2scrJnq2TuxaS7wBkCgYEAk/Atecb+1FOURStRheIjR1po2GFn8Ugo4oxo
-sF0bj8OCLnQLRvVXlOZmCLhPGDUiU6shZVoecqgJqb6Fkc+CKxRTGKix6FskbDRy
-x6lMmH3R+uI5L+oJUY4lwI5IyJQv9yJ2xGJaUpbWNt02dSeEGOfiynl5ZRr/EbTq
-1G9PcQ0CgYBtMaGqUGbGJZk7/Whw6HropSSuyvHIQ4sAHX7XjRazFsdd6/UzDCXR
-VcZ98cJGXqIvNpqGKtYM7a+rNEMtP8vvndIHO49X3Cdxk4tCD6UdwDAXrT+Fs+I+
-oYx7IkXRcHoU/FSQp7PM/Q0nQfjfJLNsk3LQ2kPNaJvRvwxz/zBD6w==
------END RSA PRIVATE KEY-----',
-        'publickey' => '-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAohFPmQfdSgnquBr39ukt
-UlCBQ9/AUUhLWWCJjAj71NFJO+B/Wgq5BeeczSTS3P0raUZpcKFptoPfkkUzmyAr
-Ml6RfjcYB+RgBvzPRkBli+YvLqNWV0fOfBzAYULDeQ4JrRNJG/aHaoQbPa4XieU/
-RVtCLeCdtB6Wq0XilBBKY4A5OCb5UglPtfaX3TvhehfWLLMEBGVqFZhq2Ftmj4KT
-AGP1v14xN84oZXmAU4RYrkoQI3Q2KSnBDi69owhGtKPJcMKHBIMMPDPATS0ZbeiJ
-0k4xW3JfudGp6rWufrCy5diaaBmK07Kt2TRTfvhj7P4gu91IKmwnseaOSpkwLphq
-awIDAQAB
------END PUBLIC KEY-----',
-        'partialkey' => false,
-    ];
     public $DNProp = [
         'emailAddress' => 'recca0120@gmail.com',
     ];
 
-    protected $privateKey = null;
-    protected $publicKey = null;
-    protected $p12 = null;
-    protected $p12data = null;
-    public function __construct()
+    public $privateKey = null;
+    public $publicKey = null;
+    public $p12 = null;
+    public $p12data = null;
+    public function __construct($options = [])
     {
-        $key = $this->generateRSA();
+        $key = (empty($options['key']) === false) ? $options['key'] : [];
+        $jsonFile = (empty($options['json']) === false) ? $options['json'] : 'rsa.json';
+        if (empty($key['privatekey']) === true or empty($key['publickey']) === true) {
+            if (file_exists($jsonFile) === true) {
+                $key = json_decode(file_get_contents($jsonFile), true);
+            } else {
+                $rsa = new RSA();
+                $key = $rsa->createKey(2048);
+                file_put_contents($jsonFile, json_encode($key));
+            }
+        }
         $this->privateKey = $key['privatekey'];
         $this->publicKey = $key['publickey'];
-    }
-
-    private function generateRSA()
-    {
-        $rsaJSON = 'rsa.json';
-        if (empty($this->rsa) === false) {
-            $key = $this->rsa;
-        } elseif (file_exists($rsaJSON) === true) {
-            $key = json_decode($rsaJSON, true);
-        } else {
-            $rsa = new RSA();
-            $key = $rsa->createKey(2048);
-            file_put_contents($rsaJSON, json_encode($key));
-        }
-
-        return $key;
     }
 
     public function certSigningRequest()
