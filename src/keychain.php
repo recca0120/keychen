@@ -16,7 +16,7 @@ class KeyChain
     public function __construct($options = [])
     {
         $key = (empty($options['key']) === false) ? $options['key'] : [];
-        $jsonFile = (empty($options['json']) === false) ? $options['json'] : 'rsa.json';
+        $jsonFile = (empty($options['json']) === false) ? $options['json'] : 'key.json';
         if (empty($key['privatekey']) === true or empty($key['publickey']) === true) {
             if (file_exists($jsonFile) === true) {
                 $key = json_decode(file_get_contents($jsonFile), true);
@@ -106,7 +106,7 @@ class KeyChain
         return $result;
     }
 
-    public function save($result, $path = '')
+    public function save($result, $path = '', $encode = null)
     {
         $filename = $path.'/'.$this->p12data['subject']['UID'].(strpos($this->p12data['subject']['CN'], 'Production') > -1 ? '.prod' : '.dev').'.pem';
         file_put_contents($filename, $result);
@@ -115,5 +115,6 @@ class KeyChain
             $filename,
             date('d/m/Y', $this->p12data['validTo_time_t'])
         );
+        return $filename;
     }
 }
