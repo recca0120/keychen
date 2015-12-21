@@ -1,4 +1,6 @@
-<?php namespace recca0120\ios;
+<?php
+
+namespace recca0120\IOS;
 
 use phpseclib\Crypt\RSA;
 use phpseclib\File\X509;
@@ -108,13 +110,14 @@ class KeyChain
 
     public function save($result, $path = '', $encode = null)
     {
-        $filename = $path.'/'.$this->p12data['subject']['UID'].(strpos($this->p12data['subject']['CN'], 'Production') > -1 ? '.prod' : '.dev').'.pem';
+        $filename = $path.'/'.$this->p12data['subject']['UID'].(strpos($this->p12data['subject']['CN'], 'Development') > -1 ? '.dev' : '.prod').'.pem';
         file_put_contents($filename, $result);
         echo sprintf(
             'Generate <b>%s</b> is valid until %s.<hr>',
             $filename,
             date('d/m/Y', $this->p12data['validTo_time_t'])
         );
+
         return $filename;
     }
 }
