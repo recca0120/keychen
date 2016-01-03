@@ -5,7 +5,7 @@ namespace recca0120\IOS;
 use phpseclib\Crypt\RSA;
 use phpseclib\File\X509;
 
-class KeyChain
+class keychain
 {
     public $DNProp = [
         'emailAddress' => 'recca0120@gmail.com',
@@ -15,6 +15,7 @@ class KeyChain
     public $publicKey = null;
     public $p12 = null;
     public $p12data = null;
+
     public function __construct($options = [])
     {
         $key = (empty($options['key']) === false) ? $options['key'] : [];
